@@ -1,15 +1,21 @@
 <template>
   <div id="app">
-    Hello,World.
+    <h1>Tetris</h1>
+    <field
+      :height="20"
+      :width="10"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import Field from './components/Field.vue';
 
 export default Vue.extend({
   name: 'App',
   components: {
+    Field
   }
 });
 </script>
@@ -21,6 +27,6 @@ export default Vue.extend({
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 10px;
 }
 </style>
