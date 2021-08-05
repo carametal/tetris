@@ -33,7 +33,15 @@ export default Vue.extend({
   },
   methods: {
     init() {
-      this.field = Array(this.width).fill(Array(this.width).fill(false))
+      const field: boolean[][] = []
+      for (let i=0; i<this.height; i++) {
+        const row: boolean[] = []
+        for (let j=0; j<this.width; j++) {
+          row.push(false)
+        }
+        field.push(row)
+      }
+      this.field = field
     }
   },
 })
