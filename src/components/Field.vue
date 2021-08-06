@@ -3,7 +3,12 @@
   <table>
     <tbody>
       <tr v-for="(row,i ) in field" :key="i">
-        <td v-for="(col, j) in row" :key="j"></td>
+        <td
+          v-for="(col, j) in row"
+          :key="j"
+          :style="{'background-color': col ? 'black': ''}"
+          @click="click(i, j)"
+        ></td>
       </tr>
     </tbody>
   </table>
@@ -42,6 +47,11 @@ export default Vue.extend({
         field.push(row)
       }
       this.field = field
+    },
+    click(i: number, j: number): void {
+      const copy = JSON.parse(JSON.stringify(this.field))
+      copy[i][j] = !copy[i][j]
+      this.field = copy
     }
   },
 })
