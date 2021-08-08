@@ -2,12 +2,10 @@
 <div class="wrapper">
   <table>
     <tbody>
-      <tr v-for="(row,i ) in field" :key="i">
+      <tr v-for="(_ ,i) in height" :key="i">
         <td
-          v-for="(col, j) in row"
+          v-for="(_, j) in width"
           :key="j"
-          :style="{'background-color': col ? 'black': ''}"
-          @click="click(i, j)"
         ></td>
       </tr>
     </tbody>
@@ -17,6 +15,12 @@
 
 <script lang="ts">
 import Vue from 'vue'
+
+interface Block {
+  x: number
+  y: number
+}
+
 export default Vue.extend({
   props: {
     height: {
@@ -30,29 +34,9 @@ export default Vue.extend({
   },
   data() {
     return {
-      field: [] as boolean[][]
     }
-  },
-  created() {
-    this.init()
   },
   methods: {
-    init() {
-      const field: boolean[][] = []
-      for (let i=0; i<this.height; i++) {
-        const row: boolean[] = []
-        for (let j=0; j<this.width; j++) {
-          row.push(false)
-        }
-        field.push(row)
-      }
-      this.field = field
-    },
-    click(i: number, j: number): void {
-      const copy = JSON.parse(JSON.stringify(this.field))
-      copy[i][j] = !copy[i][j]
-      this.field = copy
-    }
   },
 })
 </script>
