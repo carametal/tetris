@@ -17,6 +17,9 @@
 <script lang="ts">
 import Vue from 'vue'
 
+const HEIGHT= 20
+const WIDTH = 10
+
 class Point {
   x: number
   y: number
@@ -55,24 +58,39 @@ class Tetrimino {
   }
 
   public right(): void {
-    this.blocks = this.blocks.map(b => {
-      b.point.x++
-      return b
+    const touchingOnWall = this.blocks.some(b => {
+      return b.point.x >= WIDTH - 1
     })
+    if (!touchingOnWall) {
+      this.blocks = this.blocks.map(b => {
+        b.point.x++
+        return b
+      })
+    }
   }
 
   public down(): void {
-    this.blocks = this.blocks.map(b => {
-      b.point.y++
-      return b
+    const touchingOnBottom = this.blocks.some(b => {
+      return b.point.y >= HEIGHT - 1
     })
+    if (!touchingOnBottom) {
+      this.blocks = this.blocks.map(b => {
+        b.point.y++
+        return b
+      })
+    }
   }
 
   public left(): void {
-    this.blocks = this.blocks.map(b => {
-      b.point.x--
-      return b
+    const touchingOnWall = this.blocks.some(b => {
+      return b.point.x <= 0
     })
+    if(!touchingOnWall) {
+      this.blocks = this.blocks.map(b => {
+        b.point.x--
+        return b
+      })
+    }
   }
 
 }
@@ -90,18 +108,10 @@ class Square extends Tetrimino implements ITetrimino {
 }
 
 export default Vue.extend({
-  props: {
-    height: {
-      type: Number,
-      required: true,
-    },
-    width: {
-      type: Number,
-      required: true,
-    }
-  },
   data() {
     return {
+      height: HEIGHT as number,
+      width: WIDTH as number,
       tetriminos: [] as Tetrimino[],
       activeTetrimino: {} as Tetrimino
     }
