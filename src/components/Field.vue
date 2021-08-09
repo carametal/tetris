@@ -70,10 +70,7 @@ class Tetrimino {
   }
 
   public down(): void {
-    const touchingOnBottom = this.blocks.some(b => {
-      return b.point.y >= HEIGHT - 1
-    })
-    if (!touchingOnBottom) {
+    if (!this.touchingBotton()) {
       this.blocks = this.blocks.map(b => {
         b.point.y++
         return b
@@ -91,6 +88,12 @@ class Tetrimino {
         return b
       })
     }
+  }
+
+  public touchingBotton(): boolean {
+    return this.blocks.some(b => {
+      return b.point.y >= HEIGHT - 1
+    })
   }
 
 }
@@ -113,7 +116,7 @@ export default Vue.extend({
       height: HEIGHT as number,
       width: WIDTH as number,
       tetriminos: [] as Tetrimino[],
-      activeTetrimino: {} as Tetrimino
+      activeTetrimino: {} as Tetrimino | null
     }
   },
   created(): void {
@@ -147,13 +150,17 @@ export default Vue.extend({
     },
     handleKeyUpArrows(event: KeyboardEvent): void {
       if(event.code === 'ArrowLeft') {
-        this.activeTetrimino.left()
+        this.activeTetrimino?.left()
       }
       if(event.code === 'ArrowDown') { 
-        this.activeTetrimino.down()
+        this.activeTetrimino?.down()
+        if (this.activeTetrimino?.touchingBotton()) {
+          this.tetriminos.push(this.activeTetrimino)
+          this.activeTetrimino = null
+        }
       }
       if(event.code === 'ArrowRight'){ 
-        this.activeTetrimino.right()
+        this.activeTetrimino?.right()
       }
     },
   },
