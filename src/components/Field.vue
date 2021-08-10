@@ -32,6 +32,13 @@ export default Vue.extend({
       activeTetrimino: {} as Tetrimino | null
     }
   },
+  watch: {
+    activeTetrimino(): void {
+      if(this.activeTetrimino == null) {
+        this.addTetrimino()
+      }
+    }
+  },
   created(): void {
     this.addTetrimino()
     this.addEventListeners()
