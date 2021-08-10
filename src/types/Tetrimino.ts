@@ -21,10 +21,7 @@ export default class Tetrimino {
   }
 
   public right(): void {
-    const touchingOnWall = this.blocks.some(b => {
-      return b.point.x >= this.widthOfField - 1
-    })
-    if (!touchingOnWall) {
+    if (!this.touchingWallRight()) {
       this.blocks = this.blocks.map(b => {
         b.point.x++
         return b
@@ -32,8 +29,14 @@ export default class Tetrimino {
     }
   }
 
+  public touchingWallRight(): boolean {
+    return this.blocks.some(b => {
+      return b.point.x >= this.widthOfField - 1
+    })
+  }
+
   public down(): void {
-    if (!this.touchingBotton()) {
+    if (!this.touchingBottom()) {
       this.blocks = this.blocks.map(b => {
         b.point.y++
         return b
@@ -41,11 +44,14 @@ export default class Tetrimino {
     }
   }
 
-  public left(): void {
-    const touchingOnWall = this.blocks.some(b => {
-      return b.point.x <= 0
+  public touchingBottom(): boolean {
+    return this.blocks.some(b => {
+      return b.point.y >= this.heightOfField - 1
     })
-    if(!touchingOnWall) {
+  }
+
+  public left(): void {
+    if(!this.touchingWallLeft()) {
       this.blocks = this.blocks.map(b => {
         b.point.x--
         return b
@@ -53,10 +59,9 @@ export default class Tetrimino {
     }
   }
 
-  public touchingBotton(): boolean {
+  public touchingWallLeft(): boolean {
     return this.blocks.some(b => {
-      return b.point.y >= this.heightOfField - 1
+      return b.point.x <= 0
     })
   }
-
 }

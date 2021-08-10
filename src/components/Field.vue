@@ -67,7 +67,7 @@ export default Vue.extend({
       }
       if(event.code === 'ArrowDown') { 
         this.activeTetrimino?.down()
-        if (this.activeTetrimino?.touchingBotton()) {
+        if (this.activeTetrimino?.touchingBottom()) {
           this.tetriminos.push(this.activeTetrimino)
           this.activeTetrimino = null
         }
