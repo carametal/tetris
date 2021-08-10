@@ -16,99 +16,12 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import Tetrimino from '@/types/Square'
+import Square from '@/types/Square'
+import Point from '@/types/Point'
 
 const HEIGHT= 20
 const WIDTH = 10
-
-class Point {
-  x: number
-  y: number
-
-  constructor(x: number, y: number) {
-    this.x = x
-    this.y = y
-  }
-}
-
-class Block {
-  point: Point
-
-  constructor(point: Point) {
-    this.point = point
-  }
-}
-
-interface ITetrimino {
-  blocks: Block[]
-}
-
-class Tetrimino {
-  blocks: Block []
-
-  constructor(blocks: Block[]) {
-    this.blocks = blocks
-  }
-
-  public getCenter(): Point {
-    return this.blocks[0].point
-  }
-
-  public hasBlock(x: number, y: number): boolean {
-    return this.blocks.some(b => b.point.x === x && b.point.y === y)
-  }
-
-  public right(): void {
-    const touchingOnWall = this.blocks.some(b => {
-      return b.point.x >= WIDTH - 1
-    })
-    if (!touchingOnWall) {
-      this.blocks = this.blocks.map(b => {
-        b.point.x++
-        return b
-      })
-    }
-  }
-
-  public down(): void {
-    if (!this.touchingBotton()) {
-      this.blocks = this.blocks.map(b => {
-        b.point.y++
-        return b
-      })
-    }
-  }
-
-  public left(): void {
-    const touchingOnWall = this.blocks.some(b => {
-      return b.point.x <= 0
-    })
-    if(!touchingOnWall) {
-      this.blocks = this.blocks.map(b => {
-        b.point.x--
-        return b
-      })
-    }
-  }
-
-  public touchingBotton(): boolean {
-    return this.blocks.some(b => {
-      return b.point.y >= HEIGHT - 1
-    })
-  }
-
-}
-
-class Square extends Tetrimino implements ITetrimino {
-  constructor(p: Point) {
-    const blocks: Block[] = [
-      new Block(p),
-      new Block(new Point(p.x + 1, p.y)),
-      new Block(new Point(p.x, p.y + 1)),
-      new Block(new Point(p.x + 1, p.y + 1)),
-    ]
-    super(blocks)
-  }
-}
 
 export default Vue.extend({
   data() {
@@ -128,7 +41,7 @@ export default Vue.extend({
   },
   methods: {
     addTetrimino(): void {
-      const tetrimino: Tetrimino = new Square(new Point(5, 0)) 
+      const tetrimino: Tetrimino = new Square(new Point(5, 0), WIDTH, HEIGHT) 
       this.activeTetrimino = tetrimino
     },
     hasBlock(x: number, y: number): boolean {
