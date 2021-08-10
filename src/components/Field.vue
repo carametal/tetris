@@ -48,7 +48,7 @@ export default Vue.extend({
   },
   methods: {
     addTetrimino(): void {
-      const tetrimino: Tetrimino = new Square(new Point(5, 0), WIDTH, HEIGHT) 
+      const tetrimino: Tetrimino = new Square(new Point(4, 0), WIDTH, HEIGHT) 
       this.activeTetrimino = tetrimino
     },
     hasBlock(x: number, y: number): boolean {
@@ -69,19 +69,28 @@ export default Vue.extend({
       window.removeEventListener('keyup', this.handleKeyUpArrows)
     },
     handleKeyUpArrows(event: KeyboardEvent): void {
-      if(event.code === 'ArrowLeft') {
-        this.activeTetrimino?.left()
+      if(event.code === 'ArrowRight' && this.canActiveTetriminoMoveRight()){ 
+        this.activeTetrimino?.right()
       }
       if(event.code === 'ArrowDown') { 
         this.activeTetrimino?.down()
-        if (this.activeTetrimino?.touchingBottom()) {
+        if (this.activeTetrimino && !this.canActiveTetriminoMoveDown()) {
           this.tetriminos.push(this.activeTetrimino)
           this.activeTetrimino = null
         }
       }
-      if(event.code === 'ArrowRight'){ 
-        this.activeTetrimino?.right()
+      if(event.code === 'ArrowLeft' && this.canActiveTetriminoMoveLeft()) {
+        this.activeTetrimino?.left()
       }
+    },
+    canActiveTetriminoMoveRight(): boolean {
+      return !this.activeTetrimino?.touchingWallRight()
+    },
+    canActiveTetriminoMoveDown(): boolean {
+      return !this.activeTetrimino!.touchingBottom()
+    },
+    canActiveTetriminoMoveLeft(): boolean {
+      return !this.activeTetrimino?.touchingWallLeft()
     },
   },
 })

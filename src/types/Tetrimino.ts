@@ -21,12 +21,10 @@ export default class Tetrimino {
   }
 
   public right(): void {
-    if (!this.touchingWallRight()) {
-      this.blocks = this.blocks.map(b => {
-        b.point.x++
-        return b
-      })
-    }
+    this.blocks = this.blocks.map(b => {
+      b.point.x++
+      return b
+    })
   }
 
   public touchingWallRight(): boolean {
@@ -51,12 +49,10 @@ export default class Tetrimino {
   }
 
   public left(): void {
-    if(!this.touchingWallLeft()) {
-      this.blocks = this.blocks.map(b => {
-        b.point.x--
-        return b
-      })
-    }
+    this.blocks = this.blocks.map(b => {
+      b.point.x--
+      return b
+    })
   }
 
   public touchingWallLeft(): boolean {
