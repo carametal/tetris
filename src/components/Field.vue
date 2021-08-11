@@ -63,12 +63,13 @@ export default Vue.extend({
       return 'white'
     },
     addEventListeners(): void {
-      window.addEventListener('keyup', this.handleKeyUpArrows)
+      window.addEventListener('keydown', this.handleKeyUpArrows)
     },
     removeEventListeners(): void {
-      window.removeEventListener('keyup', this.handleKeyUpArrows)
+      window.removeEventListener('keydown', this.handleKeyUpArrows)
     },
     handleKeyUpArrows(event: KeyboardEvent): void {
+      console.log(event.code)
       if(event.code === 'ArrowRight' && this.canActiveTetriminoMoveRight()){ 
         this.activeTetrimino?.right()
       }
