@@ -88,10 +88,17 @@ export default Vue.extend({
     },
     canActiveTetriminoMoveDown(): boolean {
       return !this.activeTetrimino!.touchingBottom()
+        && !this.touchingOtherBlocks()
     },
     canActiveTetriminoMoveLeft(): boolean {
       return !this.activeTetrimino?.touchingWallLeft()
     },
+    touchingOtherBlocks(): boolean {
+      const points: Point[] = this.activeTetrimino!.getBottomPoints()
+      return points.some(p => {
+        return this.hasBlock(p.x, p.y + 1)
+      })
+    }
   },
 })
 </script>
