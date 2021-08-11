@@ -43,10 +43,18 @@ export default Vue.extend({
     this.addTetrimino()
     this.addEventListeners()
   },
+  mounted(): void {
+    this.setAutoDown()
+  },
   beforeDestroy(): void {
     this.removeEventListeners()
   },
   methods: {
+    setAutoDown(): void {
+      setInterval(() => {
+        this.handleDown()
+      }, 1000)
+    },
     addTetrimino(): void {
       const tetrimino: Tetrimino = new Square(new Point(4, 0), WIDTH, HEIGHT) 
       this.activeTetrimino = tetrimino
@@ -69,19 +77,22 @@ export default Vue.extend({
       window.removeEventListener('keydown', this.handleKeyUpArrows)
     },
     handleKeyUpArrows(event: KeyboardEvent): void {
+      if(event.code === 'ArrowLeft' && this.canActiveTetriminoMoveLeft()) {
+        this.activeTetrimino?.left()
+      }
+      if(event.code === 'ArrowDown') { 
+        this.handleDown()
+      }
       if(event.code === 'ArrowRight' && this.canActiveTetriminoMoveRight()){ 
         this.activeTetrimino?.right()
       }
-      if(event.code === 'ArrowDown') { 
-        if(this.canActiveTetriminoMoveDown()) {
-          this.activeTetrimino?.down()
-        }
-        if (!this.canActiveTetriminoMoveDown()) {
-          this.switchNewTetrimino()
-        }
+    },
+    handleDown(): void {
+      if(this.canActiveTetriminoMoveDown()) {
+        this.activeTetrimino?.down()
       }
-      if(event.code === 'ArrowLeft' && this.canActiveTetriminoMoveLeft()) {
-        this.activeTetrimino?.left()
+      if (!this.canActiveTetriminoMoveDown()) {
+        this.switchNewTetrimino()
       }
     },
     switchNewTetrimino(): void {
