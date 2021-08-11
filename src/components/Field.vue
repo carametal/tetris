@@ -124,21 +124,18 @@ export default Vue.extend({
         && !this.touchingOtherBlocksLeft()
     },
     touchingOtherBlocksRight(): boolean {
-      const points: Point[] = this.activeTetrimino!.getBottomPoints()
-      return points.some(p => {
-        return this.hasBlock(p.x + 1, p.y)
+      return this.activeTetrimino!.blocks.some(b => {
+        return this.hasBlock(b.point.x + 1, b.point.y)
       })
     },
     touchingOtherBlocksUnder(): boolean {
-      const points: Point[] = this.activeTetrimino!.getBottomPoints()
-      return points.some(p => {
-        return this.hasBlock(p.x, p.y + 1)
+      return this.activeTetrimino!.blocks.some(b => {
+        return this.hasBlock(b.point.x, b.point.y + 1)
       })
     },
     touchingOtherBlocksLeft(): boolean {
-      const points: Point[] = this.activeTetrimino!.getBottomPoints()
-      return points.some(p => {
-        return this.hasBlock(p.x - 1, p.y)
+      return this.activeTetrimino!.blocks.some(b => {
+        return this.hasBlock(b.point.x - 1, b.point.y)
       })
     },
   },

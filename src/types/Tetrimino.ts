@@ -20,14 +20,6 @@ export default class Tetrimino {
     return this.blocks.some(b => b.point.x === x && b.point.y === y)
   }
 
-  public getBottomPoints(): Point[] {
-    const lowestY = this.blocks
-      .map(b => b.point.y)
-      .reduce((a, b) => Math.max(a, b))
-    return this.blocks.filter(b => b.point.y === lowestY)
-      .map(b => b.point)
-  }
-
   public right(): void {
     this.blocks = this.blocks.map(b => {
       b.point.x++
