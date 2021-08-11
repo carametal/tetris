@@ -73,15 +73,20 @@ export default Vue.extend({
         this.activeTetrimino?.right()
       }
       if(event.code === 'ArrowDown') { 
-        this.activeTetrimino?.down()
-        if (this.activeTetrimino && !this.canActiveTetriminoMoveDown()) {
-          this.tetriminos.push(this.activeTetrimino)
-          this.activeTetrimino = null
+        if(this.canActiveTetriminoMoveDown()) {
+          this.activeTetrimino?.down()
+        }
+        if (!this.canActiveTetriminoMoveDown()) {
+          this.switchNewTetrimino()
         }
       }
       if(event.code === 'ArrowLeft' && this.canActiveTetriminoMoveLeft()) {
         this.activeTetrimino?.left()
       }
+    },
+    switchNewTetrimino(): void {
+      this.tetriminos.push(this.activeTetrimino!)
+      this.activeTetrimino = null
     },
     canActiveTetriminoMoveRight(): boolean {
       return !this.activeTetrimino?.touchingWallRight()
