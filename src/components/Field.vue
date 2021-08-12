@@ -16,8 +16,8 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Tetrimino from '@/types/Square'
-import Square from '@/types/Square'
+import Tetrimino from '@/types/MinoO'
+import MinoO from '@/types/MinoO'
 import MinoS from '@/types/MinoS'
 import MinoZ from '@/types/MinoZ'
 import Point from '@/types/Point'
@@ -63,7 +63,7 @@ export default Vue.extend({
     makeTetriminoRandom(): Tetrimino {
       const num: number = Math.floor(Math.random() * 3)
       if(num == 0) {
-        return new Square(new Point(4, 0), WIDTH, HEIGHT) 
+        return new MinoO(new Point(4, 0), WIDTH, HEIGHT) 
       } else if (num == 1) {
         return new MinoS(new Point(4, 0), WIDTH, HEIGHT) 
       } else if (num == 2) {
