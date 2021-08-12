@@ -20,6 +20,19 @@ export default class Tetrimino {
     return this.blocks.some(b => b.point.x === x && b.point.y === y)
   }
 
+  public deleteBlockIfExists(y: number): void {
+    this.blocks = this.blocks.filter(b =>  b.point.y !== y)
+  }
+
+  // y以下のブロックを一段下げる
+  public downIfNeeded(y: number): void {
+    this.blocks.forEach(b => {
+      if (b.point.y <= y) {
+        b.point.y++
+      }
+    })
+  }
+
   public getCenter(): Point {
     return this.blocks[0].point
   }

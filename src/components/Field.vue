@@ -108,7 +108,19 @@ export default Vue.extend({
       }
       if (!this.canActiveTetriminoMoveDown()) {
         this.switchNewTetrimino()
+        this.deleteLineIfFilled()
       }
+    },
+    deleteLineIfFilled(): void {
+      Array(this.height).fill(0).forEach((_, y) => {
+        const filledALine = Array(this.width).fill(0).every((_, x) => {
+          return this.hasBlock(x, y)
+        })
+        if(filledALine) {
+          this.tetriminos.forEach(t => t.deleteBlockIfExists(y))
+          this.tetriminos.forEach(t => t.downIfNeeded(y))
+        }
+      })
     },
     switchNewTetrimino(): void {
       this.tetriminos.push(this.activeTetrimino!)
