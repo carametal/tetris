@@ -28,10 +28,10 @@ const WIDTH = 10
 export default Vue.extend({
   data() {
     return {
-      height: HEIGHT as number,
-      width: WIDTH as number,
+      height: HEIGHT,
+      width: WIDTH,
       tetriminos: [] as Tetrimino[],
-      activeTetrimino: {} as Tetrimino | null
+      activeTetrimino: {} as Tetrimino | null,
     }
   },
   watch: {
@@ -97,6 +97,9 @@ export default Vue.extend({
       }
       if(event.code === 'ArrowRight' && this.canActiveTetriminoMoveRight()){ 
         this.activeTetrimino?.right()
+      }
+      if(event.code === 'Space') {
+        this.activeTetrimino!.rotateRight()
       }
     },
     handleDown(): void {

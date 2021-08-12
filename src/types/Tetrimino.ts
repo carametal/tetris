@@ -1,23 +1,35 @@
 import Block from "./Block"
+import { Tilt } from "./ITetrimino"
 import Point from "./Point"
 
 export default class Tetrimino {
   widthOfField: number
   heightOfField: number
+
+  tilt: Tilt
   blocks: Block []
 
   constructor(blocks: Block[], widthOfField: number, heightOfField: number) {
     this.widthOfField = widthOfField
     this.heightOfField = heightOfField
     this.blocks = blocks
+    this.tilt = 0
+  }
+
+  public hasBlock(x: number, y: number): boolean {
+    return this.blocks.some(b => b.point.x === x && b.point.y === y)
   }
 
   public getCenter(): Point {
     return this.blocks[0].point
   }
 
-  public hasBlock(x: number, y: number): boolean {
-    return this.blocks.some(b => b.point.x === x && b.point.y === y)
+  protected incrementTilt(): void {
+    if(this.tilt >= 3) {
+      this.tilt = 0
+      return
+    }
+    this.tilt++
   }
 
   public right(): void {

@@ -13,4 +13,8 @@ export default class Square extends Tetrimino implements ITetrimino {
     ]
     super(blocks, widthOfField, heightOfField)
   }
+
+  public rotateRight(): void {
+    super.incrementTilt()
+  }
 }
