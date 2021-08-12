@@ -20,6 +20,7 @@ import Tetrimino from '@/types/MinoO'
 import MinoO from '@/types/MinoO'
 import MinoS from '@/types/MinoS'
 import MinoZ from '@/types/MinoZ'
+import MinoI from '@/types/MinoI'
 import Point from '@/types/Point'
 
 const HEIGHT= 20
@@ -61,15 +62,18 @@ export default Vue.extend({
       this.activeTetrimino = this.makeTetriminoRandom()
     },
     makeTetriminoRandom(): Tetrimino {
-      const num: number = Math.floor(Math.random() * 3)
-      if(num == 0) {
+      const num: number = Math.floor(Math.random() * 4)
+      console.log(num)
+      if(num === 0) {
         return new MinoO(new Point(4, 0), WIDTH, HEIGHT) 
-      } else if (num == 1) {
+      } else if (num === 1) {
         return new MinoS(new Point(4, 0), WIDTH, HEIGHT) 
-      } else if (num == 2) {
+      } else if (num === 2) {
         return new MinoZ(new Point(4, 0), WIDTH, HEIGHT) 
+      } else if (num === 3) {
+        return new MinoI(new Point(4, 0), WIDTH, HEIGHT) 
       }
-      return new MinoZ(new Point(4, 0), WIDTH, HEIGHT)
+      throw new Error('Not implemented.')
     },
     hasBlock(x: number, y: number): boolean {
       return this.tetriminos.some(t => t.hasBlock(x, y))
