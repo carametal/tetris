@@ -22,6 +22,7 @@ import ITetrimino from '@/types/ITetrimino'
 
 const HEIGHT= 20
 const WIDTH = 10
+const DEFAULT_INTERVAL_KEY = -1
 const getDefaultPoint = () => new Point(4, 0)
 
 export default Vue.extend({
@@ -31,6 +32,7 @@ export default Vue.extend({
       width: WIDTH,
       tetriminos: [] as ITetrimino[],
       activeTetrimino: {} as ITetrimino | null,
+      intervalKey: DEFAULT_INTERVAL_KEY,
     }
   },
   watch: {
@@ -52,7 +54,7 @@ export default Vue.extend({
   },
   methods: {
     setAutoDown(): void {
-      setInterval(() => {
+      this.intervalKey = setInterval(() => {
         this.handleDown()
       }, 1000)
     },
@@ -69,6 +71,9 @@ export default Vue.extend({
       }
       if(this.activeTetrimino?.hasBlock(x, y)) {
         return this.activeTetrimino.color
+      }
+      if(y === 0) {
+        return 'lightgray'
       }
       return 'white'
     },
@@ -99,6 +104,7 @@ export default Vue.extend({
       if (!this.canActiveTetriminoMoveDown()) {
         this.switchNewTetrimino()
         this.deleteLineIfFilled()
+        this.finishGameIfLost()
       }
     },
     handleRotate(): void {
@@ -122,6 +128,15 @@ export default Vue.extend({
           this.tetriminos.forEach(t => t.downIfNeeded(y))
         }
       })
+    },
+    finishGameIfLost(): void {
+      const lost = Array(this.width).fill(0).some((_, x) => this.hasBlock(x, 0))
+      if(lost) {
+        clearInterval(this.intervalKey)
+        this.intervalKey = DEFAULT_INTERVAL_KEY
+        this.removeEventListeners()
+        return
+      }
     },
     switchNewTetrimino(): void {
       this.tetriminos.push(this.activeTetrimino!)
