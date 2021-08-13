@@ -13,6 +13,7 @@
   </table>
   <div v-show="isOverlayShow" class="overlay">
     <h1 class="lost">You are Lost.</h1>
+    <button class="lost" @click="start">Retry</button>
   </div>
 </div>
 </template>
@@ -34,7 +35,7 @@ export default Vue.extend({
       height: HEIGHT,
       width: WIDTH,
       tetriminos: [] as ITetrimino[],
-      activeTetrimino: {} as ITetrimino | null,
+      activeTetrimino: makeTetriminoRandom(getDefaultPoint(), WIDTH, HEIGHT),
       intervalKey: DEFAULT_INTERVAL_KEY,
       isOverlayShow: false
     }
@@ -46,17 +47,23 @@ export default Vue.extend({
       }
     }
   },
-  created(): void {
-    this.addTetrimino()
-    this.addEventListeners()
-  },
   mounted(): void {
-    this.setAutoDown()
+    this.start()
   },
   beforeDestroy(): void {
     this.removeEventListeners()
   },
   methods: {
+    start(): void {
+      this.addEventListeners()
+      this.clearTetrimino()
+      this.isOverlayShow = false
+      this.addTetrimino()
+      this.setAutoDown()
+    },
+    clearTetrimino(): void {
+      this.tetriminos = []
+    },
     setAutoDown(): void {
       this.intervalKey = setInterval(() => {
         this.handleDown()
@@ -112,13 +119,13 @@ export default Vue.extend({
       }
     },
     handleRotate(): void {
-      this.activeTetrimino!.rotateRight()
+      this.activeTetrimino.rotateRight()
       Array(this.height).fill(0).forEach((_, y) => {
-        if(this.activeTetrimino!.hasBlock(-1, y)) {
-          this.activeTetrimino!.right()
+        if(this.activeTetrimino.hasBlock(-1, y)) {
+          this.activeTetrimino.right()
         }
-        if(this.activeTetrimino!.hasBlock(this.width, y)) {
-          this.activeTetrimino!.left()
+        if(this.activeTetrimino.hasBlock(this.width, y)) {
+          this.activeTetrimino.left()
         }
       })
     },
@@ -144,33 +151,34 @@ export default Vue.extend({
       }
     },
     switchNewTetrimino(): void {
-      this.tetriminos.push(this.activeTetrimino!)
-      this.activeTetrimino = null
+      const tetrimino = this.activeTetrimino
+      this.activeTetrimino = makeTetriminoRandom(getDefaultPoint(), WIDTH, HEIGHT)
+      this.tetriminos.push(tetrimino)
     },
     canActiveTetriminoMoveRight(): boolean {
       return !this.activeTetrimino?.touchingWallRight()
         && !this.touchingOtherBlocksRight()
     },
     canActiveTetriminoMoveDown(): boolean {
-      return !this.activeTetrimino!.touchingBottom()
+      return !this.activeTetrimino.touchingBottom()
         && !this.touchingOtherBlocksUnder()
     },
     canActiveTetriminoMoveLeft(): boolean {
-      return !this.activeTetrimino?.touchingWallLeft()
+      return !this.activeTetrimino.touchingWallLeft()
         && !this.touchingOtherBlocksLeft()
     },
     touchingOtherBlocksRight(): boolean {
-      return this.activeTetrimino!.blocks.some(b => {
+      return this.activeTetrimino.blocks.some(b => {
         return this.hasBlock(b.point.x + 1, b.point.y)
       })
     },
     touchingOtherBlocksUnder(): boolean {
-      return this.activeTetrimino!.blocks.some(b => {
+      return this.activeTetrimino.blocks.some(b => {
         return this.hasBlock(b.point.x, b.point.y + 1)
       })
     },
     touchingOtherBlocksLeft(): boolean {
-      return this.activeTetrimino!.blocks.some(b => {
+      return this.activeTetrimino.blocks.some(b => {
         return this.hasBlock(b.point.x - 1, b.point.y)
       })
     },
@@ -196,12 +204,19 @@ td {
   width: 100%;
   height: 100%;
 }
-.lost {
+h1.lost,
+button.lost {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
+}
+button.lost {
+  top: 60%;
+  width: 100px;
+  height: 45px;
+  background-color: silver;
 }
 </style>
