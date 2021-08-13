@@ -89,7 +89,7 @@ export default Vue.extend({
         this.activeTetrimino?.right()
       }
       if(event.code === 'Space') {
-        this.activeTetrimino!.rotateRight()
+        this.handleRotate()
       }
     },
     handleDown(): void {
@@ -100,6 +100,17 @@ export default Vue.extend({
         this.switchNewTetrimino()
         this.deleteLineIfFilled()
       }
+    },
+    handleRotate(): void {
+      this.activeTetrimino!.rotateRight()
+      Array(this.height).fill(0).forEach((_, y) => {
+        if(this.activeTetrimino!.hasBlock(-1, y)) {
+          this.activeTetrimino!.right()
+        }
+        if(this.activeTetrimino!.hasBlock(this.width, y)) {
+          this.activeTetrimino!.left()
+        }
+      })
     },
     deleteLineIfFilled(): void {
       Array(this.height).fill(0).forEach((_, y) => {
