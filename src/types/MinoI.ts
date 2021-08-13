@@ -1,9 +1,10 @@
 import Block from "./Block"
-import ITetrimino from "./ITetrimino"
+import ITetrimino, { Color } from "./ITetrimino"
 import Point from "./Point"
 import Tetrimino from "./Tetrimino"
 
 export default class MinoO extends Tetrimino implements ITetrimino {
+  color: Color
   constructor(p: Point, widthOfField: number, heightOfField: number) {
     const blocks: Block[] = [
       new Block(p),
@@ -12,6 +13,7 @@ export default class MinoO extends Tetrimino implements ITetrimino {
       new Block(new Point(p.x, p.y - 2)),
     ]
     super(blocks, widthOfField, heightOfField)
+    this.color = 'aqua'
   }
 
   public rotateRight(): void {

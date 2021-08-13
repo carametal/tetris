@@ -63,7 +63,6 @@ export default Vue.extend({
     },
     makeTetriminoRandom(): Tetrimino {
       const num: number = Math.floor(Math.random() * 4)
-      console.log(num)
       if(num === 0) {
         return new MinoO(new Point(4, 0), WIDTH, HEIGHT) 
       } else if (num === 1) {
@@ -79,10 +78,12 @@ export default Vue.extend({
       return this.tetriminos.some(t => t.hasBlock(x, y))
     },
     getColor(x: number, y: number): string {
-      if (this.hasBlock(x, y)) {
-        return 'black'
-      } else if (this.activeTetrimino != null && this.activeTetrimino.hasBlock(x, y)) {
-        return 'gray'
+      const tetrimino = this.tetriminos.find(t => t.hasBlock(x, y) )
+      if(tetrimino) {
+        return tetrimino.color
+      }
+      if(this.activeTetrimino?.hasBlock(x, y)) {
+        return this.activeTetrimino.color
       }
       return 'white'
     },
