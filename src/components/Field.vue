@@ -11,6 +11,9 @@
       </tr>
     </tbody>
   </table>
+  <div v-show="isOverlayShow" class="overlay">
+    <h1 class="lost">You are Lost.</h1>
+  </div>
 </div>
 </template>
 
@@ -33,6 +36,7 @@ export default Vue.extend({
       tetriminos: [] as ITetrimino[],
       activeTetrimino: {} as ITetrimino | null,
       intervalKey: DEFAULT_INTERVAL_KEY,
+      isOverlayShow: false
     }
   },
   watch: {
@@ -135,6 +139,7 @@ export default Vue.extend({
         clearInterval(this.intervalKey)
         this.intervalKey = DEFAULT_INTERVAL_KEY
         this.removeEventListeners()
+        this.isOverlayShow = true
         return
       }
     },
@@ -182,5 +187,21 @@ td {
   width: 30px;
   height: 30px;
   border: solid 1px;
+}
+.overlay {
+  background: rgba(100, 100, 100, 0.8);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.lost {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
 </style>
