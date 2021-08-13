@@ -16,13 +16,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Tetrimino from '@/types/MinoO'
-import MinoO from '@/types/MinoO'
-import MinoS from '@/types/MinoS'
-import MinoZ from '@/types/MinoZ'
-import MinoI from '@/types/MinoI'
-import MinoL from '@/types/MinoL'
 import Point from '@/types/Point'
+import { makeTetriminoRandom } from '@/types/MinoMaker'
+import ITetrimino from '@/types/ITetrimino'
 
 const HEIGHT= 20
 const WIDTH = 10
@@ -33,8 +29,8 @@ export default Vue.extend({
     return {
       height: HEIGHT,
       width: WIDTH,
-      tetriminos: [] as Tetrimino[],
-      activeTetrimino: {} as Tetrimino | null,
+      tetriminos: [] as ITetrimino[],
+      activeTetrimino: {} as ITetrimino | null,
     }
   },
   watch: {
@@ -61,22 +57,7 @@ export default Vue.extend({
       }, 1000)
     },
     addTetrimino(): void {
-      this.activeTetrimino = this.makeTetriminoRandom()
-    },
-    makeTetriminoRandom(): Tetrimino {
-      const num: number = Math.floor(Math.random() * 5)
-      if(num === 0) {
-        return new MinoO(getDefaultPoint(), WIDTH, HEIGHT) 
-      } else if (num === 1) {
-        return new MinoS(getDefaultPoint(), WIDTH, HEIGHT) 
-      } else if (num === 2) {
-        return new MinoZ(getDefaultPoint(), WIDTH, HEIGHT) 
-      } else if (num === 3) {
-        return new MinoI(getDefaultPoint(), WIDTH, HEIGHT) 
-      } else if (num === 4) {
-        return new MinoL(getDefaultPoint(), WIDTH, HEIGHT) 
-      }
-      throw new Error('Not implemented.')
+      this.activeTetrimino = makeTetriminoRandom(getDefaultPoint(), WIDTH, HEIGHT)
     },
     hasBlock(x: number, y: number): boolean {
       return this.tetriminos.some(t => t.hasBlock(x, y))

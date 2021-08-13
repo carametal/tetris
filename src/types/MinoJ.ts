@@ -3,7 +3,7 @@ import ITetrimino, { Color } from "./ITetrimino"
 import Point from "./Point"
 import Tetrimino from "./Tetrimino"
 
-export default class MinoL extends Tetrimino implements ITetrimino {
+export default class MinoJ extends Tetrimino implements ITetrimino {
   color: Color
 
   constructor(p: Point, widthOfField: number, heightOfField: number) {
@@ -11,10 +11,10 @@ export default class MinoL extends Tetrimino implements ITetrimino {
       new Block(p),
       new Block(new Point(p.x, p.y - 1)),
       new Block(new Point(p.x, p.y + 1)),
-      new Block(new Point(p.x + 1, p.y + 1)),
+      new Block(new Point(p.x - 1, p.y + 1)),
     ]
     super(blocks, widthOfField, heightOfField)
-    this.color = 'orange'
+    this.color = 'blue'
   }
 
   public rotateRight(): void {
@@ -24,12 +24,12 @@ export default class MinoL extends Tetrimino implements ITetrimino {
         new Block(p),
         new Block(new Point(p.x + 1, p.y)),
         new Block(new Point(p.x - 1, p.y)),
-        new Block(new Point(p.x - 1, p.y + 1)),
+        new Block(new Point(p.x - 1, p.y - 1)),
       ]
     } else if (this.tilt === 1) {
       this.blocks = [
         new Block(p),
-        new Block(new Point(p.x - 1, p.y - 1)),
+        new Block(new Point(p.x + 1, p.y - 1)),
         new Block(new Point(p.x, p.y - 1)),
         new Block(new Point(p.x, p.y + 1)),
       ]
@@ -38,14 +38,14 @@ export default class MinoL extends Tetrimino implements ITetrimino {
         new Block(p),
         new Block(new Point(p.x - 1, p.y)),
         new Block(new Point(p.x + 1, p.y)),
-        new Block(new Point(p.x + 1, p.y - 1)),
+        new Block(new Point(p.x + 1, p.y + 1)),
       ]
     } else if (this.tilt == 3) {
       this.blocks = [
         new Block(p),
         new Block(new Point(p.x, p.y - 1)),
         new Block(new Point(p.x, p.y + 1)),
-        new Block(new Point(p.x + 1, p.y + 1)),
+        new Block(new Point(p.x - 1, p.y + 1)),
       ]
     }
     this.incrementTilt()

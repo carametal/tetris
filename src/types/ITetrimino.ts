@@ -2,7 +2,7 @@ import Block from "./Block";
 
 export type Tilt = 0 | 1 | 2 | 3
 
-export type Color = 'yellow' | 'green' | 'red' | 'aqua' | 'orange'
+export type Color = 'yellow' | 'green' | 'red' | 'aqua' | 'orange' | 'blue'
 
 export default interface ITetrimino {
   color: Color
@@ -15,4 +15,9 @@ export default interface ITetrimino {
   down(): void
   left(): void
   rotateRight(): void
+  deleteBlockIfExists(y: number): void
+  downIfNeeded(y: number): void
+  touchingWallRight(): boolean
+  touchingBottom(): boolean
+  touchingWallLeft(): boolean
 }

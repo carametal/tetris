@@ -3,8 +3,9 @@ import ITetrimino, { Color } from "./ITetrimino"
 import Point from "./Point"
 import Tetrimino from "./Tetrimino"
 
-export default class MinoO extends Tetrimino implements ITetrimino {
+export default class MinoI extends Tetrimino implements ITetrimino {
   color: Color
+
   constructor(p: Point, widthOfField: number, heightOfField: number) {
     const blocks: Block[] = [
       new Block(p),
