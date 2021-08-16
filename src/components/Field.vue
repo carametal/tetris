@@ -15,6 +15,7 @@
     <h1 class="lost">You are Lost.</h1>
     <button class="lost" @click="start">Retry</button>
   </div>
+  <next-tetrimino v-model="nextTetrimino" />
 </div>
 </template>
 
@@ -23,6 +24,7 @@ import Vue from 'vue'
 import Point from '@/types/Point'
 import { makeTetriminoRandom } from '@/types/MinoMaker'
 import ITetrimino from '@/types/ITetrimino'
+import NextTetrimino from './NextTetrimino.vue'
 
 const HEIGHT= 20
 const WIDTH = 10
@@ -30,21 +32,16 @@ const DEFAULT_INTERVAL_KEY = -1
 const getDefaultPoint = () => new Point(4, 0)
 
 export default Vue.extend({
+  components: { NextTetrimino },
   data() {
     return {
       height: HEIGHT,
       width: WIDTH,
       tetriminos: [] as ITetrimino[],
+      nextTetrimino: makeTetriminoRandom(getDefaultPoint(), WIDTH, HEIGHT),
       activeTetrimino: makeTetriminoRandom(getDefaultPoint(), WIDTH, HEIGHT),
       intervalKey: DEFAULT_INTERVAL_KEY,
       isOverlayShow: false
-    }
-  },
-  watch: {
-    activeTetrimino(): void {
-      if(this.activeTetrimino == null) {
-        this.addTetrimino()
-      }
     }
   },
   mounted(): void {
@@ -152,7 +149,8 @@ export default Vue.extend({
     },
     switchNewTetrimino(): void {
       const tetrimino = this.activeTetrimino
-      this.activeTetrimino = makeTetriminoRandom(getDefaultPoint(), WIDTH, HEIGHT)
+      this.activeTetrimino = this.nextTetrimino
+      this.nextTetrimino = makeTetriminoRandom(getDefaultPoint(), WIDTH, HEIGHT)
       this.tetriminos.push(tetrimino)
     },
     canActiveTetriminoMoveRight(): boolean {

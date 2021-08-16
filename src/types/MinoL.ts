@@ -5,6 +5,7 @@ import Tetrimino from "./Tetrimino"
 
 export default class MinoL extends Tetrimino implements ITetrimino {
   color: Color
+  shape: boolean[][]
 
   constructor(p: Point, widthOfField: number, heightOfField: number) {
     const blocks: Block[] = [
@@ -15,6 +16,11 @@ export default class MinoL extends Tetrimino implements ITetrimino {
     ]
     super(blocks, widthOfField, heightOfField)
     this.color = 'orange'
+    this.shape = [
+      [false, false, false, false],
+      [true, true, true, false],
+      [false, false, true, false],
+    ]
   }
 
   public rotateRight(): void {

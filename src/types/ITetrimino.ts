@@ -9,6 +9,7 @@ export default interface ITetrimino {
 
   blocks: Block[]
   tilt: Tilt 
+  shape: boolean[][]
 
   hasBlock(x: number, y: number): boolean
   right(): void
