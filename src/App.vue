@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <h1>Tetris</h1>
     <field />
   </div>
 </template>

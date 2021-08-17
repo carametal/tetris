@@ -1,22 +1,31 @@
 <template>
-<div class="wrapper">
-  <table>
-    <tbody>
-      <tr v-for="(_ ,y) in height" :key="y">
-        <td
-          v-for="(_, x) in width"
-          :key="x"
-          :style="{ 'background-color': getColor(x, y)}"
-        ></td>
-      </tr>
-    </tbody>
-  </table>
-  <div v-show="isOverlayShow" class="overlay">
-    <h1 class="lost">You are Lost.</h1>
-    <button class="lost" @click="start">Retry</button>
+<div class="outer-wrapper">
+  <header>
+    <h1>Tetris</h1>
+  </header>
+  <div class="wrapper">
+    <div class="main">
+      <table>
+        <tbody>
+          <tr v-for="(_ ,y) in height" :key="y">
+            <td
+              v-for="(_, x) in width"
+              :key="x"
+              :style="{ 'background-color': getColor(x, y)}"
+            ></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sub">
+      <next-tetrimino v-model="nextTetrimino" />
+      <point-counter v-model="point" />
+    </div>
+    <div v-show="isOverlayShow" class="overlay">
+      <h1 class="lost">You are Lost.</h1>
+      <button class="lost" @click="start">Retry</button>
+    </div>
   </div>
-  <next-tetrimino v-model="nextTetrimino" />
-  <point-counter v-model="point" />
 </div>
 </template>
 
@@ -189,15 +198,37 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+div.outer-wrapper {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+div.wrapper {
+  display: flex;
+  width: 100%;
+}
+
+div.main {
+  flex-grow: 1;
+  max-width: 400px;
+}
+
+div.sub {
+  flex-grow: 1;
+  max-width: 100px;
+}
+
 table {
   margin: 0 auto;
   border-collapse: collapse;
 }
+
 td {
   width: 30px;
   height: 30px;
   border: solid 1px;
 }
+
 .overlay {
   background: rgba(100, 100, 100, 0.8);
   position: absolute;
@@ -206,6 +237,7 @@ td {
   width: 100%;
   height: 100%;
 }
+
 h1.lost,
 button.lost {
   position: absolute;
@@ -215,6 +247,7 @@ button.lost {
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
 }
+
 button.lost {
   top: 60%;
   width: 100px;

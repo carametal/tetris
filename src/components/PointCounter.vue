@@ -16,14 +16,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style scoped>
-
-#point-counter {
-  position: absolute;
-  top: 40%;
-  left: 70%;
-  width: 110px
-}
-
-</style>

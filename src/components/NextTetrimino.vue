@@ -1,6 +1,6 @@
 <template>
-<div id="next-tetrimino">
-  <h3 class="title">Next</h3>
+<div>
+  <h3>Next</h3>
   <table class="next">
     <tr v-for="(_, y) in Array(height).fill(0)" :key="y">
       <td
@@ -55,16 +55,10 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-#next-tetrimino {
-  position: absolute;
-  top: 10%;
-  left: 70%;
-}
 
 table.next {
-  position: relative;
+  margin: 0 auto;
   border-collapse: collapse;
-  margin-left: 10px;
 }
 
 td.next {
