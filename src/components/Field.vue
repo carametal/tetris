@@ -16,6 +16,7 @@
     <button class="lost" @click="start">Retry</button>
   </div>
   <next-tetrimino v-model="nextTetrimino" />
+  <point-counter v-model="point" />
 </div>
 </template>
 
@@ -25,6 +26,7 @@ import Point from '@/types/Point'
 import { makeTetriminoRandom } from '@/types/MinoMaker'
 import ITetrimino from '@/types/ITetrimino'
 import NextTetrimino from './NextTetrimino.vue'
+import PointCounter from './PointCounter.vue'
 
 const HEIGHT= 20
 const WIDTH = 10
@@ -32,7 +34,7 @@ const DEFAULT_INTERVAL_KEY = -1
 const getDefaultPoint = () => new Point(4, 0)
 
 export default Vue.extend({
-  components: { NextTetrimino },
+  components: { NextTetrimino, PointCounter },
   data() {
     return {
       height: HEIGHT,
@@ -41,7 +43,8 @@ export default Vue.extend({
       nextTetrimino: makeTetriminoRandom(getDefaultPoint(), WIDTH, HEIGHT),
       activeTetrimino: makeTetriminoRandom(getDefaultPoint(), WIDTH, HEIGHT),
       intervalKey: DEFAULT_INTERVAL_KEY,
-      isOverlayShow: false
+      isOverlayShow: false,
+      point: 0,
     }
   },
   mounted(): void {
@@ -134,6 +137,7 @@ export default Vue.extend({
         if(filledALine) {
           this.tetriminos.forEach(t => t.deleteBlockIfExists(y))
           this.tetriminos.forEach(t => t.downIfNeeded(y))
+          this.point++
         }
       })
     },
