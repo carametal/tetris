@@ -18,12 +18,19 @@
       </table>
     </div>
     <div class="sub">
+      <div>
+        <button @click="togglePause">Pause</button>
+      </div>
       <next-tetrimino v-model="nextTetrimino" />
       <point-counter v-model="point" />
     </div>
-    <div v-show="isOverlayShow" class="overlay">
+    <div v-show="lost" class="overlay">
       <h1 class="lost">You are Lost.</h1>
       <button class="lost" @click="start">Retry</button>
+    </div>
+    <div v-show="pause" class="overlay">
+      <h1 class="lost">pause</h1>
+      <button class="lost" @click="togglePause">Restart</button>
     </div>
   </div>
 </div>
@@ -52,7 +59,8 @@ export default Vue.extend({
       nextTetrimino: makeTetriminoRandom(getDefaultPoint(), WIDTH, HEIGHT),
       activeTetrimino: makeTetriminoRandom(getDefaultPoint(), WIDTH, HEIGHT),
       intervalKey: DEFAULT_INTERVAL_KEY,
-      isOverlayShow: false,
+      lost: false,
+      pause: false,
       point: 0,
     }
   },
@@ -66,9 +74,12 @@ export default Vue.extend({
     start(): void {
       this.addEventListeners()
       this.clearTetrimino()
-      this.isOverlayShow = false
+      this.lost = false
       this.addTetrimino()
       this.setAutoDown()
+    },
+    togglePause(): void {
+      this.pause = !this.pause
     },
     clearTetrimino(): void {
       this.tetriminos = []
@@ -121,6 +132,7 @@ export default Vue.extend({
       }
     },
     handleDown(): void {
+      if(this.pause) return
       if(this.canActiveTetriminoMoveDown()) {
         this.activeTetrimino.down()
       }
@@ -164,7 +176,7 @@ export default Vue.extend({
         clearInterval(this.intervalKey)
         this.intervalKey = DEFAULT_INTERVAL_KEY
         this.removeEventListeners()
-        this.isOverlayShow = true
+        this.lost = true
         return
       }
     },
