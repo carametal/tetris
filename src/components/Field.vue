@@ -116,6 +116,9 @@ export default Vue.extend({
       if(event.code === 'Space') {
         this.handleRotate()
       }
+      if(event.code === 'Enter') {
+        this.handleDownToBotttom()
+      }
     },
     handleDown(): void {
       if(this.canActiveTetriminoMoveDown()) {
@@ -137,6 +140,11 @@ export default Vue.extend({
           this.activeTetrimino.left()
         }
       })
+    },
+    handleDownToBotttom(): void {
+      while(this.activeTetrimino.getCenter().y > 0) {
+        this.handleDown()
+      }
     },
     deleteLineIfFilled(): void {
       Array(this.height).fill(0).forEach((_, y) => {

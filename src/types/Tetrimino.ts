@@ -20,6 +20,10 @@ export default class Tetrimino {
     return this.blocks.some(b => b.point.x === x && b.point.y === y)
   }
 
+  public getCenter(): Point {
+    return this.blocks[0].point
+  }
+
   public deleteBlockIfExists(y: number): void {
     this.blocks = this.blocks.filter(b =>  b.point.y !== y)
   }
@@ -31,10 +35,6 @@ export default class Tetrimino {
         b.point.y++
       }
     })
-  }
-
-  public getCenter(): Point {
-    return this.blocks[0].point
   }
 
   protected incrementTilt(): void {

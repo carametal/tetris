@@ -1,4 +1,5 @@
 import Block from "./Block";
+import Point from "./Point"
 
 export type Tilt = 0 | 1 | 2 | 3
 
@@ -12,6 +13,7 @@ export default interface ITetrimino {
   shape: boolean[][]
 
   hasBlock(x: number, y: number): boolean
+  getCenter(): Point
   right(): void
   down(): void
   left(): void
