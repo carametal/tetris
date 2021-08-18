@@ -106,7 +106,7 @@ export default Vue.extend({
       if(y === 0) {
         return 'lightgray'
       }
-      return 'white'
+      return 'darkgray'
     },
     addEventListeners(): void {
       window.addEventListener('keydown', this.handleKeyUpArrows)
