@@ -89,7 +89,7 @@ export default Vue.extend({
       if(tetrimino) {
         return tetrimino.color
       }
-      if(this.activeTetrimino?.hasBlock(x, y)) {
+      if(this.activeTetrimino.hasBlock(x, y)) {
         return this.activeTetrimino.color
       }
       if(y === 0) {
@@ -105,13 +105,13 @@ export default Vue.extend({
     },
     handleKeyUpArrows(event: KeyboardEvent): void {
       if(event.code === 'ArrowLeft' && this.canActiveTetriminoMoveLeft()) {
-        this.activeTetrimino?.left()
+        this.activeTetrimino.left()
       }
       if(event.code === 'ArrowDown') { 
         this.handleDown()
       }
       if(event.code === 'ArrowRight' && this.canActiveTetriminoMoveRight()){ 
-        this.activeTetrimino?.right()
+        this.activeTetrimino.right()
       }
       if(event.code === 'Space') {
         this.handleRotate()
@@ -119,7 +119,7 @@ export default Vue.extend({
     },
     handleDown(): void {
       if(this.canActiveTetriminoMoveDown()) {
-        this.activeTetrimino?.down()
+        this.activeTetrimino.down()
       }
       if (!this.canActiveTetriminoMoveDown()) {
         this.switchNewTetrimino()
@@ -167,7 +167,7 @@ export default Vue.extend({
       this.tetriminos.push(tetrimino)
     },
     canActiveTetriminoMoveRight(): boolean {
-      return !this.activeTetrimino?.touchingWallRight()
+      return !this.activeTetrimino.touchingWallRight()
         && !this.touchingOtherBlocksRight()
     },
     canActiveTetriminoMoveDown(): boolean {
