@@ -133,13 +133,12 @@ export default Vue.extend({
     },
     handleDown(): void {
       if(this.pause) return
-      if(this.canActiveTetriminoMoveDown()) {
-        this.activeTetrimino.down()
-      }
       if (!this.canActiveTetriminoMoveDown()) {
         this.switchNewTetrimino()
         this.deleteLineIfFilled()
         this.finishGameIfLost()
+      } else {
+        this.activeTetrimino.down()
       }
     },
     handleRotate(): void {
