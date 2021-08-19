@@ -23,6 +23,7 @@
       </div>
       <next-tetrimino v-model="nextTetrimino" />
       <point-counter v-model="point" />
+      <manual-block />
     </div>
     <div v-show="lost" class="overlay">
       <h1 class="lost">You are Lost.</h1>
@@ -43,6 +44,7 @@ import { makeTetriminoRandom } from '@/types/MinoMaker'
 import ITetrimino from '@/types/ITetrimino'
 import NextTetrimino from './NextTetrimino.vue'
 import PointCounter from './PointCounter.vue'
+import ManualBlock from './ManualBlock.vue'
 
 const HEIGHT= 20
 const WIDTH = 10
@@ -50,7 +52,7 @@ const DEFAULT_INTERVAL_KEY = -1
 const getDefaultPoint = () => new Point(4, 0)
 
 export default Vue.extend({
-  components: { NextTetrimino, PointCounter },
+  components: { NextTetrimino, PointCounter, ManualBlock },
   data() {
     return {
       height: HEIGHT,
@@ -176,7 +178,6 @@ export default Vue.extend({
         this.intervalKey = DEFAULT_INTERVAL_KEY
         this.removeEventListeners()
         this.lost = true
-        return
       }
     },
     switchNewTetrimino(): void {
@@ -218,7 +219,7 @@ export default Vue.extend({
 
 <style scoped>
 div.outer-wrapper {
-  max-width: 500px;
+  max-width: 530px;
   margin: 0 auto;
 }
 
@@ -234,7 +235,7 @@ div.main {
 
 div.sub {
   flex-grow: 1;
-  max-width: 100px;
+  max-width: 130px;
 }
 
 table {
