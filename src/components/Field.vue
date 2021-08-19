@@ -219,7 +219,7 @@ export default Vue.extend({
 
 <style scoped>
 div.outer-wrapper {
-  max-width: 530px;
+  max-width: 550px;
   margin: 0 auto;
 }
 
@@ -235,7 +235,7 @@ div.main {
 
 div.sub {
   flex-grow: 1;
-  max-width: 130px;
+  max-width: 150px;
 }
 
 table {
